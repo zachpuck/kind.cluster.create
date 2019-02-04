@@ -1,0 +1,26 @@
+name: github.com/zachpuck/kind.cluster.create
+description: create a kind cluster if one does not already exist
+inputs:
+  name:
+    string:
+      constraints: { minLength: 1 }
+      description: name of cluster
+  dockerSocket:
+    socket:
+      description: access to docker on node
+version: 0.1.0
+outputs:
+  kubeConfig:
+    file:
+      description: kind cluster kubeConfig
+run:
+  container:
+    cmd: [ /cmd.sh ]
+    envVars:
+      name:
+    files:
+      /cmd.sh:
+      /kubeConfig: $(kubeConfig)
+    image: { ref: 'zachpuck/kind-ci:latest' }
+    sockets:
+      /var/run/docker.sock: dockerSocket
