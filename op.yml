@@ -27,6 +27,6 @@ run:
     files:
       /cmd.sh:
       /kubeConfig: $(kubeConfig)
-    image: { ref: 'zachpuck/kind-ci:latest' }
+    image: { ref: 'zachpuck/kind.cluster.create:0.1.0' }
     sockets:
       /var/run/docker.sock: dockerSocket

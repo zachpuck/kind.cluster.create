@@ -1,0 +1,39 @@
+name: provision-image
+description: Provisions image for the op
+inputs:
+  dockerUsername:
+    string:
+      constraints: { minLength: 1 }
+      description: user for logging in to docker hub
+  dockerPassword:
+    string:
+      constraints: { minLength: 1 }
+      description: password for logging in to docker hub
+      isSecret: true
+  srcDir:
+    dir:
+      default: .
+  imageName:
+    string:
+      constraints: { minLength: 1 }
+      description: name of image
+      default: zachpuck/kind.cluster.create
+  version:
+    string:
+      constraints: { minLength: 1 }
+      description: what is the version number to tag this image
+run:
+  serial:
+    - op:
+        ref: github.com/opspec-pkgs/docker.image.build#2.1.0
+        inputs:
+          dockerfile: $(/Dockerfile)
+          imageName: $(imageName):$(version)
+        outputs: { imageTar }
+    - op:
+        ref: github.com/opspec-pkgs/docker.image.push#2.1.0
+        inputs:
+          imageTar:
+          imageName: $(imageName):$(version)
+          username: $(dockerUsername)
+          password: $(dockerPassword)
