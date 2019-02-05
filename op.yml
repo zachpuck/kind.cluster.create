@@ -1,6 +1,10 @@
 name: github.com/zachpuck/kind.cluster.create
 description: create a kind cluster if one does not already exist
 inputs:
+  configDir:
+    dir:
+      description: directory to save kubeconfig in
+      default: .
   name:
     string:
       constraints: { minLength: 1 }
@@ -18,6 +22,8 @@ run:
     cmd: [ /cmd.sh ]
     envVars:
       name:
+    dirs:
+      /configDir: $(configDir)
     files:
       /cmd.sh:
       /kubeConfig: $(kubeConfig)

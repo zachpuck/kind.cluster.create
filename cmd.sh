@@ -11,12 +11,11 @@ for c in ${CLUSTER_LIST}; do
 done
 
 if [ ${clusterExists} ]; then
-    echo "kind cluster already exists"
-
-    kind get kubeconfig-path --name="${name}" > /kubeConfig
+    echo "kind cluster already exists, use the existing kubeconfig: kind-config-$name"
+    echo "if you no longer have access to the kind clusters kubeconfig please create a new cluster"
 else
     echo "creating kind cluster"
 
     kind create cluster --name ${name}
-    kind get kubeconfig-path --name="${name}" > /kubeConfig
+    cat $(kind get kubeconfig-path --name="${name}") > /configDir/kind-config-${name}.yaml
 fi

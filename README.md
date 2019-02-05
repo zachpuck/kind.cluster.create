@@ -1,6 +1,7 @@
 # Problem statement
 
 creates a [kind](https://github.com/kubernetes-sigs/kind) (kubernetes in docker) cluster if one does not already exist
+and saves the kind kubeconfig to the current directory.
 
 # Format
 
@@ -28,6 +29,8 @@ op:
   inputs:
     name:
     dockerSocket:
+    # params w/ defaults
+    configDir:
   outputs:
     kubeConfig:
 ```
