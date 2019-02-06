@@ -11,7 +11,11 @@ inputs:
       description: name of cluster
   dockerSocket:
     socket:
-      description: access to docker on node
+      description: access to docker on node (typically '/var/run/docker.sock')
+  kindConfig:
+    file:
+      description: config file used to create kind cluster
+      default: /default-config.yaml
 version: 0.1.0
 outputs:
   kubeConfig:
@@ -25,6 +29,7 @@ run:
     dirs:
       /configDir: $(configDir)
     files:
+      /config.yaml: $(kindConfig)
       /cmd.sh:
       /kubeConfig: $(kubeConfig)
     image: { ref: 'zachpuck/kind.cluster.create:0.1.0' }

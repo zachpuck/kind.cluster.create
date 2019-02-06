@@ -31,6 +31,7 @@ op:
     dockerSocket:
     # params w/ defaults
     configDir:
+    kindConfig:
   outputs:
     kubeConfig:
 ```

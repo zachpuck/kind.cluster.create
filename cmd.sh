@@ -16,6 +16,6 @@ if [ ${clusterExists} ]; then
 else
     echo "creating kind cluster"
 
-    kind create cluster --name ${name}
+    kind create cluster --config /config.yaml --name ${name}
     cat $(kind get kubeconfig-path --name="${name}") > /configDir/kind-config-${name}.yaml
 fi
